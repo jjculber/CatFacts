@@ -1,6 +1,7 @@
 
 + [ Features ]
-  - Command Line Interface
+  + Command Line Interface
   - Interactive CLI Interface
-  - Clinet / Server Mode
+  - Client / Server Mode
   - Manage/View Data
+  - Load facts from file
