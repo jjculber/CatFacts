@@ -1,6 +1,15 @@
+These features are the current goals of the catfacts. This may change.
 
-+ [ Features ]
++ [ catfacts Features ]
   - Command Line Interface
+
++ [ catfacts-client Features ]
+  - Commmand Line Interface
   - Interactive CLI Interface
-  - Clinet / Server Mode
+  - Client
   - Manage/View Data
+
++ [ catfacts-server Features ]
+  - Address book stored in DBMS
+  - Alarms stored in DBMS
+  - Alarms (fact to execute send to # at specific time)
