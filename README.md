@@ -12,3 +12,8 @@ tribute to your good taste. It comes from the mountain
 springs to you."
 
 Cat Facts powered by Google Voice
+
+Command Line Usage
+==================
+
+java -cp google-voice-java-1.10-java6.jar:json.jar:. -u username -p password [phonenumbers...]

@@ -1,7 +1,19 @@
 import com.techventus.server.voice.Voice;
 
+import java.util.*;
+import java.util.regex.*;
+
 public class catfacts {
+
+    private static String username = null;
+    private static String password = null;
+    // TODO load facts from file
+    private static String filename = "catfacts.txt";
+    private static List<String> recipients = new ArrayList<String>();
+
 public static void main(String[] args) {
+
+        parseArgs(args);
 
 String[] facts = {
 "The word cat refers to a family of meat-eating animals that include tigers, lions, leopards, and panthers.",
@@ -139,14 +151,17 @@ String[] facts = {
 };
 
     try {
-       Voice v = new Voice("giveandget@gmail.com", "notmypassword");
-       System.out.println(v.getSMS());
+            System.out.println("username: " + username);
+            System.out.println("password: " + password);
+            if (username != null && password != null)
+            {
+                Voice v = new Voice(username, password);
+                //System.out.println(v.getSMS());
        java.util.Random r = new java.util.Random();
 
-       String test = "12345678900";
+                //String test = "12345678900";
 
-       String[] recipients = {test};
-
+                //String[] recipients = {test};
 
        int everyTenSeconds = 10 * 1000;
        int fivemin = 5 * 60 * 1000;
@@ -158,11 +173,63 @@ String[] facts = {
       
        for (String dest : recipients) {
            v.sendSMS(dest, "Did you know " + facts[r.nextInt(facts.length)].replaceAll("\\.$", "") + "!?! Thx for using CAT FACTS!");
+                    System.out.println("Sent cat fact to: " + dest);
            //java.lang.Thread.sleep(timeperiod);
        }
+            }
     } catch (Exception e) {
         System.out.println(e);
     }
+    }
 
+    private static final String FLAG_USERNAME_SHORT = "-u";
+    private static final String FLAG_USERNAME_LONG = "--username";
+    private static final String FLAG_PASSWORD_SHORT = "-p";
+    private static final String FLAG_PASSWORD_LONG = "--password";
+    private static final String FLAG_FILENAME_SHORT = "-f";
+    private static final String FLAG_FILENAME_LONG = "--file";
+
+    // TODO improve pattern
+    private static final Pattern phoneNumberPattern = Pattern.compile("\\d+");
+
+    private static void parseArgs(String[] args)
+    {
+        List<String> argList = Arrays.asList(args);
+        Iterator<String> it = argList.iterator();
+
+        while (it.hasNext())
+        {
+            String arg = it.next();
+
+            if (FLAG_USERNAME_SHORT.equals(arg) || FLAG_USERNAME_LONG.equals(arg))
+            {
+                if (it.hasNext())
+                {
+                    username = it.next();
+                }
+            }
+            else if (FLAG_PASSWORD_SHORT.equals(arg) || FLAG_PASSWORD_LONG.equals(arg))
+            {
+                if (it.hasNext())
+                {
+                    password = it.next();
+                }
+            }
+            else if (FLAG_FILENAME_SHORT.equals(arg) || FLAG_FILENAME_LONG.equals(arg))
+            {
+                if (it.hasNext())
+                {
+                    filename = it.next();
+                }
+            }
+            else
+            {
+                Matcher m = phoneNumberPattern.matcher(arg);
+                if (m.matches())
+                {
+                    recipients.add(arg);
+                }
+            }
+        }
 }
 }
